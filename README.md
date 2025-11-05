@@ -1,65 +1,95 @@
-<h1 align="center">Hi 👋, I'm Ali Bin Sumida</h1>
-<h3 align="center"> Backend Developer | ASP Developer | Clean Architecture Enthusiast</h3>
+# User Management API
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=716W&label=Profile%20views&color=0e75b6&style=flat" alt="716W" />
-</p>
+A sample ASP.NET Core Web API that demonstrates user management with Entity Framework Core, SQL Server, and clean architecture practices. The project includes request/response logging middleware, model validation, repository/service layers, and fully asynchronous CRUD endpoints.
 
----
-### 💼 About Me
+## Getting Started
 
-I'm a **Computer Science student** at Hadramout University and a passionate **Backend Developer** specializing in the .NET ecosystem.
+### Prerequisites
 
-I'm deeply interested in designing and building **robust, scalable, and well-structured Web APIs** that follow modern software engineering best practices.
+- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download)
+- A SQL Server instance (local or remote)
+- [Entity Framework Core CLI tools](https://learn.microsoft.com/en-us/ef/core/cli/dotnet)
 
-Driven by curiosity and a love for clean code, I focus on:
-- Applying **Clean Architecture** to create maintainable and testable systems  
-- Embracing **Domain-Driven Design (DDD)** for better domain modeling  
-- Following **SOLID principles** to ensure clear separation of concerns  
-- Writing efficient, readable, and future-ready code  
+### Configuration
 
-I'm always learning, refining my skills, and building real-world solutions — fueled by passion and purpose. 🚀
----
+1. Copy `appsettings.json` to `appsettings.Development.json` (or create a user secret) and update the `DefaultConnection` string with your SQL Server connection details:
 
-### 🛠️ Tech Stack
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=localhost;Database=UserManagementDb;Trusted_Connection=True;TrustServerCertificate=True;"
+   }
+   ```
 
-#### 💻 Languages
-![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
+2. Apply migrations and update the database:
 
-#### ⚙️ Frameworks & Tools
-![.NET](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
-![ASP.NET MVC](https://img.shields.io/badge/ASP.NET-MVC-0078D7?style=for-the-badge&logo=.net&logoColor=white)
-![Blazor](https://img.shields.io/badge/Blazor-512BD4?style=for-the-badge&logo=blazor&logoColor=white)
-![ASP.NET Web API](https://img.shields.io/badge/Web%20API-68217A?style=for-the-badge&logo=webapi&logoColor=white)
+   ```bash
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   ```
 
+### Running the API
 
-#### 🧰 Architecture & Patterns
-![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-007ACC?style=for-the-badge&logo=architect&logoColor=white)
-![DDD](https://img.shields.io/badge/Domain--Driven%20Design-6E4FFF?style=for-the-badge&logo=databricks&logoColor=white)
-![SOLID Principles](https://img.shields.io/badge/SOLID-Principles-blueviolet?style=for-the-badge&logo=code&logoColor=white)
+```bash
+dotnet restore
+dotnet build
+dotnet run --project src/UserManagement.Api/UserManagement.Api.csproj
+```
 
----
+The API will start on `https://localhost:5001` and `http://localhost:5000` by default.
 
-### 📊 LeetCode Stats
+### API Endpoints
 
-[![LeetCode Stats](https://leetcard.jacoblin.cool/716W?theme=dark&font=Arial)](https://leetcode.com/716W)
+| Method | Endpoint                | Description            |
+| ------ | ----------------------- | ---------------------- |
+| GET    | `/api/users`            | Retrieve all users     |
+| GET    | `/api/users/{id}`       | Retrieve a user by ID  |
+| POST   | `/api/users`            | Create a new user      |
+| PUT    | `/api/users/{id}`       | Update an existing user|
+| DELETE | `/api/users/{id}`       | Delete a user          |
 
----
+### Project Structure
 
-### 📈 GitHub Stats
+```
+src/UserManagement.Api/
+├── Controllers/         # API controllers
+├── Data/                # EF Core DbContext and configurations
+├── DTOs/                # Data transfer objects with validation attributes
+├── Extensions/          # Service registration helpers
+├── Middleware/          # Custom middleware (logging, etc.)
+├── Models/              # Entity models
+├── Repositories/        # Repository interfaces and implementations
+├── Services/            # Business logic services
+├── appsettings.json     # Base configuration (copy before editing)
+└── Program.cs           # Application bootstrap
+```
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=716W&show_icons=true&theme=tokyonight" />
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=716W&theme=tokyonight" />
-</p>
+### Logging & Observability
 
----
+A custom middleware captures request/response metadata and logs it using the built-in logging framework. This is helpful for debugging and tracing API calls.
 
-### 🏆 GitHub Trophies
+### Testing the API
 
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=716W&theme=gruvbox" />
-</p>
+Use a tool like `curl`, [HTTPie](https://httpie.io/), or [Postman](https://www.postman.com/) to exercise the endpoints.
+
+Example request:
+
+```bash
+curl -X POST https://localhost:5001/api/users \
+  -H "Content-Type: application/json" \
+  -d '{
+        "firstName": "Ada",
+        "lastName": "Lovelace",
+        "email": "ada@example.com"
+      }'
+```
+
+### Next Steps
+
+- Add authentication/authorization (e.g., JWT bearer tokens)
+- Add automated tests (unit/integration)
+- Containerize using Docker
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
 
