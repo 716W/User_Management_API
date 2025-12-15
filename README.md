@@ -82,14 +82,3 @@ curl -X POST https://localhost:5001/api/users \
         "email": "ada@example.com"
       }'
 ```
-
-### Next Steps
-
-- Add authentication/authorization (e.g., JWT bearer tokens)
-- Add automated tests (unit/integration)
-- Containerize using Docker
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
